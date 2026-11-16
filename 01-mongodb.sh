@@ -12,7 +12,7 @@ N="\e[0m"
 TIMESTAMP=$(date "+%Y-%m-%d %H-%M-%S")
 
 USERID=$(id -u)
-if [ USERID -ne 0 ]; then
+if [ $USERID -ne 0 ]; then
     echo -e "$TIMESTAMP [ERROR] $R please run this script with root access $N" | tee -a $LOGS_FILE
     exit 1
 fi
