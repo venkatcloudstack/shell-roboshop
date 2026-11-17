@@ -44,7 +44,7 @@ VALIDATE () {
 #!/bin/bash
 
 # Copy RabbitMQ repository
-cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>> "$LOGS_FILE"
+cp rabbitmq.repo  /etc/yum.repos.d/rabbitmq.repo &>> "$LOGS_FILE"
 VALIDATE $? "Adding RabbitMQ repository"
 
 # Install RabbitMQ
