@@ -67,5 +67,6 @@ VALIDATE $? "added mongo repo"
 
 dnf install mongodb-mongosh -y
 VALIDATE $? "installing mongodb-client"
+ 
 
 
