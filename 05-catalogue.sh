@@ -59,7 +59,7 @@ cd /app
 npm install  &>> $LOGS_FILE
 VALIDATE $? "downloading dependecies"
 
-cat $SCRIPT_DIR
+cat $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
  
 
 
