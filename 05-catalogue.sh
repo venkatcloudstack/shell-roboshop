@@ -1,5 +1,4 @@
 #!/bin/bash
-
 LOGS_FOLDER="/var/log/roboshop"
 sudo mkdir -p $LOGS_FOLDER
 sudo chown -R ec2-user:ec2-user $LOGS_FOLDER
@@ -26,20 +25,23 @@ VALIDATE () {
     fi    
 }
 
+dnf module disable nodejs -y    &>> $LOGS_FILE
+VALIDATE $? "disabling nodejs"
 
-dnf module disable nodejs -y  &>>  $LOGS_FILE
-VALIDATE $? "disable nodejs"
+dnf module enable nodejs:20 -y  &>> $LOGS_FILE
+VALIDATE $? "enabling nodejs"
 
-dnf module enable nodejs:20 -y &>>  $LOGS_FILE
-VALIDATE $? "enable nodejs"
-
-dnf install nodejs -y   &>>  $LOGS_FILE
+dnf install nodejs -y           &>> $LOGS_FILE
 VALIDATE $? "installing nodejs"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-VALIDATE $? "adding systemuser"
+id roboshop         &>> $LOGS_FILE
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    VALIDATE $? "creating systemuser"
+else 
+    echo "user roboshop is already created ... $Y SKIPPING $N"
+fi
 
 mkdir /app 
-VALIDATE $? "creating app dir"
+VALIDATE $? "app directory created"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>>  $LOGS_FILE
