@@ -70,7 +70,7 @@ VALIDATE $? "installing mongosh client"
 
 INDEX=$(mongosh --host mongodb.venkatcloudstack.shop --eval "db.getSiblingDB('catalogue').getCollectionNames().includes('products')")
 
-if [ $INDEX -eq false ]; then
+if [ $INDEX -eq "false" ]; then
     mongosh --host mongodb.venkatcloudstack.shop </app/db/master-data.js
     VALIDATE $? "loading products to mongodb"
 else
