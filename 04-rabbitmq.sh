@@ -25,17 +25,46 @@ VALIDATE () {
     fi    
 }
 
-cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>> $LOGS_FILE
-VALIDATE $? "adding rabbitmq repo"
+# cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>> $LOGS_FILE
+# VALIDATE $? "adding rabbitmq repo"
 
-dnf install rabbitmq-server -y  &>> $LOGS_FILE
-VALIDATE $? "installing rabbitmq"
+# dnf install rabbitmq-server -y  &>> $LOGS_FILE
+# VALIDATE $? "installing rabbitmq"
 
-systemctl enable rabbitmq-server &>> $LOGS_FILE
-systemctl start rabbitmq-server  &>> $LOGS_FILE
-VALIDATE $? "enabling starting rabbitmq-server"
+# systemctl enable rabbitmq-server &>> $LOGS_FILE
+# systemctl start rabbitmq-server  &>> $LOGS_FILE
+# VALIDATE $? "enabling starting rabbitmq-server"
 
-rabbitmqctl add_user roboshop roboshop123
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
-VALIDATE $? "user and password setup"
+# rabbitmqctl add_user roboshop roboshop123
+# rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+# VALIDATE $? "user and password setup"
+
+
+
+#!/bin/bash
+
+# Copy RabbitMQ repository
+cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>> "$LOGS_FILE"
+VALIDATE $? "Adding RabbitMQ repository"
+
+# Install RabbitMQ
+dnf install rabbitmq-server -y &>> "$LOGS_FILE"
+VALIDATE $? "Installing RabbitMQ"
+
+# Enable RabbitMQ service
+systemctl enable rabbitmq-server &>> "$LOGS_FILE"
+VALIDATE $? "Enabling RabbitMQ service"
+
+# Start RabbitMQ service
+systemctl start rabbitmq-server &>> "$LOGS_FILE"
+VALIDATE $? "Starting RabbitMQ service"
+
+# Create RabbitMQ user
+rabbitmqctl add_user roboshop roboshop123 &>> "$LOGS_FILE"
+VALIDATE $? "Creating RabbitMQ user"
+
+# Set RabbitMQ permissions
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> "$LOGS_FILE"
+VALIDATE $? "Setting RabbitMQ permissions"
+
 
