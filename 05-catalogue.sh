@@ -60,6 +60,14 @@ npm install  &>> $LOGS_FILE
 VALIDATE $? "downloading dependecies"
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "created systemctl service"
+
+cp mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "adding mongo repo"
+
+dnf install mongodb-mongosh -y
+VALIDATE $? "installing mongosh client"
+
  
 
 
