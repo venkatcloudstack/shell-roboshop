@@ -28,6 +28,13 @@ VALIDATE () {
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>> $LOGS_FILE
 VALIDATE $? "adding rabbitmq repo"
 
+sudo dnf clean all
+sudo dnf makecache
+sudo dnf install erlang rabbitmq-server -y
+sudo systemctl enable --now rabbitmq-server
+sudo rabbitmq-plugins enable rabbitmq_management
+sudo systemctl status rabbitmq-server
+
 dnf install rabbitmq-server -y  &>> $LOGS_FILE
 VALIDATE $? "installing rabbitmq"
 
