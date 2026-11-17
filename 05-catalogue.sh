@@ -65,9 +65,22 @@ VALIDATE $? "created systemctl service"
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "adding mongo repo"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y  &>> $LOGS_FILE
 VALIDATE $? "installing mongosh client"
 
+INDEX=$(mongosh --host mongodb.venkatcloudstack.shop --eval "db.getSiblingDB('catalogue').getCollectionNames().includes('products')")
+
+if [ $INDEX -eq false ]; then
+    mongosh --host mongodb.venkatcloudstack.shop </app/db/master-data.js
+    VALIDATE $? "loading products to mongodb"
+else
+    echo -e "products already loaded .. $y SKIPPING $N "
+fi
+
+systemctl daemon-reload     &>> $LOGS_FILE
+systemctl enable catalogue  &>> $LOGS_FILE
+systemctl restart catalogue &>> $LOGS_FILE
+VALIDATE $? "restarting catalogue"
  
 
 
