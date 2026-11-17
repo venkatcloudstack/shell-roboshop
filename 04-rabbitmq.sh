@@ -48,8 +48,8 @@ cp rabbitmq.repo  /etc/yum.repos.d/rabbitmq.repo &>> "$LOGS_FILE"
 VALIDATE $? "Adding RabbitMQ repository"
 
 # Install RabbitMQ
-dnf install rabbitmq-server -y &>> "$LOGS_FILE"
-VALIDATE $? "Installing RabbitMQ"
+dnf install rabbitmq-server -y
+VALIDATE $? "install rabbitmq"
 
 # Enable RabbitMQ service
 systemctl enable rabbitmq-server &>> "$LOGS_FILE"
