@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOGS_FOLDER="/var/log/robosop"
+LOGS_FOLDER="/var/log/roboshop"
 sudo mkdir -p $LOGS_FOLDER
 sudo chown -R ec2-user:ec2-user $LOGS_FOLDER
 sudo chmod -R 755 $LOGS_FOLDER
@@ -26,9 +26,9 @@ VALIDATE () {
     fi    
 }
 
-dnf module disable redis -y
+dnf module disable redis -y &>> $LOGS_FILE
 VALIDATE $? "disable default redis"
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y &>> $LOGS_FILE
 VALIDATE $? "enable redis new version"
 
 dnf install redis -y &>> $LOGS_FILE
