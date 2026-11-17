@@ -42,6 +42,6 @@ else
     echo "user roboshop is already created ... $Y SKIPPING $N"
 fi
 
-mkdir /app 
+mkdir -p /app 
 VALIDATE $? "app directory created"
 
