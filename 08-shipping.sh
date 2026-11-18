@@ -52,6 +52,9 @@ cd /app
 mvn clean package   &>> $LOGS_FILE
 VALIDATE $? "downloading dependecies"
 
+mv target/shipping-1.0.jar shipping.jar 
+VALIDATE $? "adding shipping.jar file"
+
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 VALIDATE $? "created systemctl service"
 
