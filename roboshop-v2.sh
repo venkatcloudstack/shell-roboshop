@@ -13,4 +13,4 @@ if [ $# -lt 2 ]; then
     echo -e "$R ERROR: atleast two args required $N"
     echo "USAGE: $0 [create/destroy] [instance1] [instance2]"
     exit 1
-fi
+ficd
