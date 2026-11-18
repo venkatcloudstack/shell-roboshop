@@ -46,7 +46,12 @@ do
                 )
              echo "launched instance: $INSTANCE_ID "
 
-            ##update R53 record
+            
+                    
+            else
+                    echo "roboshop-$instance already running : $INSTANCE_ID"
+        fi
+         ##update R53 record
              if [ "$instance" == "frontend" ]; then
                     IP=$( aws ec2 describe-instances --instance-ids $INSTANCE_ID \
                     --query 'Reservations[0].Instances[0].PublicIpAddress '   \
@@ -87,10 +92,7 @@ do
 
                 
             '
-                echo "updated r53 record for : $instance"        
-            else
-                    echo "roboshop-$instance already running : $INSTANCE_ID"
-        fi
-     fi
+            echo "updated r53 record for : $instance"
+    fi
     
 done
