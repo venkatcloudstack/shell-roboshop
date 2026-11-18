@@ -50,7 +50,7 @@ VALIDATE $? "removing user zip"
 mkdir -p /app 
 VALIDATE $? "app directory created"
 
-curl -o curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip    &>> $LOGS_FILE
+curl -o  /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip    &>> $LOGS_FILE
 cd /app 
 unzip /tmp/user.zip   &>> $LOGS_FILE
 VALIDATE $? "downloaded and extracted code"
