@@ -51,5 +51,5 @@ VALIDATE $? "copied roboshop nginx conf"
 
 systemctl enable nginx   &>> $LOGS_FILE
 systemctl restart nginx  &>> $LOGS_FILE
-VALIDATE $? "restarting nginx"  &>> $LOGS_FILE
+VALIDATE $? "restarting nginx"  
 
