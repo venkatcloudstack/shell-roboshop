@@ -61,6 +61,7 @@ do
                         )
                     R53_RECORD="$instance.$DOMAIN_NAME"
             fi
+            
             aws route53 change-resource-record-sets \
             --hosted-zone-id "$ZONE_ID" \
             --change-batch '
@@ -76,17 +77,20 @@ do
                                 "TTL": 1,
                                 "ResourceRecords": [
                                     {
-                                        "Value": "$IP"
+                                        "Value": "'$IP'"
                                     }
                                 ]
                             }
                         }
                     ]
                 }
-            echo "updated r53 record for : $instance"        
-        else
-            echo "roboshop-$instance already running : $INSTANCE_ID"
+
+                
+            '
+                echo "updated r53 record for : $instance"        
+            else
+                    echo "roboshop-$instance already running : $INSTANCE_ID"
         fi
-    fi
+     fi
     
 done
