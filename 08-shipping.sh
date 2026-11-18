@@ -5,6 +5,7 @@ sudo chown -R ec2-user:ec2-user $LOGS_FOLDER
 sudo chmod -R 755 $LOGS_FOLDER
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPT_DIR="$PWD"
+MYSQL_HOST=mysql.venkatcloudstack.shop
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -56,6 +57,23 @@ VALIDATE $? "created systemctl service"
 
 dnf install mysql -y &>> $LOGS_FILE
 VALIDATE $? "installing mysql"
+
+mysql -h MySQL.venkatcloudstack.shop -u root -pRoboShop@1 -e "USE cities"
+if [ $? -ne 0 ]; then
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+    VALIDATE $? "data loaded"
+else
+    echo  -e "data already loaded $Y SKIPPING $N"
+fi
+
+systemctl daemon-reload
+systemctl enable shipping  &>> $LOGS_FILE
+systemctl restart shipping &>> $LOGS_FILE
+VALIDATE $? "restart shipping"
+
+
 
 
 
